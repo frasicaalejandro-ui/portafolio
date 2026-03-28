@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sergio Aranda | Backend Developer | Django & APIs</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #05070c;
+    color: #edf2ff;
+    display: flex;
+    line-height: 1.5;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0f1219; }
+  ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+
+  /* ========== SIDEBAR FIJA ========== */
+  .sidebar {
+    width: 290px;
+    min-height: 100vh;
+    background: linear-gradient(165deg, #0a0e17 0%, #06090f 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(59,130,246,0.25);
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 1.2rem;
+  }
+  .avatar-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #a855f7, #3b82f6);
+    background-size: 200% 200%;
+    animation: borderGlow 3s ease infinite;
+    z-index: 0;
+  }
+  @keyframes borderGlow {
+    0% { background-position: 0% 50%; opacity: 0.6; }
+    50% { background-position: 100% 50%; opacity: 1; }
+    100% { background-position: 0% 50%; opacity: 0.6; }
+  }
+  .sidebar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #0a0e17;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+  }
+  .sidebar h2 {
+    font-size: 1.55rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(120deg, #ffffff, #94a3f8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.4rem;
+  }
+  .role-badge {
+    background: rgba(59,130,246,0.2);
+    display: inline-block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 5px 18px;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #60a5fa;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(59,130,246,0.3);
+  }
+  .contact-info {
+    margin: 1.5rem 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.2rem;
+  }
+  .contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #b9c3e0;
+    margin: 0.7rem 0;
+    word-break: break-word;
+  }
+  .contact-info i {
+    width: 28px;
+    color: #3b82f6;
+    font-size: 1rem;
+    text-align: center;
+  }
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0.5rem 0 1rem;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 50px;
+    color: #eef2ff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.25s ease;
+  }
+  .btn i { font-size: 0.9rem; }
+  .btn:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(59,130,246,0.35);
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    margin-left: 290px;
+    flex: 1;
+    min-height: 100vh;
+    background: #05070c;
+    width: calc(100% - 290px);
+  }
+
+  /* HERO */
+  .hero {
+    background: radial-gradient(ellipse at 70% 20%, #0b1120, #020408);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(59,130,246,0.2);
+    position: relative;
+  }
+  .hero h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #b9d0ff, #8ba5ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+  }
+  .hero p {
+    font-size: 1.1rem;
+    color: #94a3b8;
+  }
+
+  /* CTA BUTTON */
+  .cta-container {
+    margin-top: 1.5rem;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    padding: 12px 28px;
+    border-radius: 60px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59,130,246,0.4);
+  }
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(59,130,246,0.6);
+    gap: 14px;
+  }
+
+  /* CARRUSEL DE TECNOLOGÍAS */
+  .tech-carousel {
+    margin-top: 1.8rem;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    background: rgba(0,0,0,0.3);
+    border-radius: 60px;
+    padding: 0.8rem 0;
+  }
+  .carousel-track {
+    display: flex;
+    animation: scrollTech 25s linear infinite;
+    gap: 2rem;
+    width: max-content;
+  }
+  .tech-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: rgba(59,130,246,0.1);
+    padding: 6px 20px;
+    border-radius: 50px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(59,130,246,0.3);
+    transition: all 0.3s;
+  }
+  .tech-item i {
+    font-size: 1.6rem;
+    color: #60a5fa;
+  }
+  .tech-item span {
+    font-size: 0.65rem;
+    font-weight: 500;
+  }
+  @keyframes scrollTech {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .tech-carousel:hover .carousel-track {
+    animation-play-state: paused;
+  }
+
+  /* NAV STICKY */
+  .nav-sticky {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0.8rem 1rem;
+    background: rgba(5, 7, 12, 0.95);
+    backdrop-filter: blur(16px);
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    border-bottom: 1px solid rgba(59,130,246,0.25);
+    flex-wrap: wrap;
+  }
+  .nav-sticky a {
+    color: #b9c3e0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: 0.2s;
+    padding: 5px 0;
+    position: relative;
+  }
+  .nav-sticky a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #a855f7);
+    transition: 0.3s;
+    border-radius: 2px;
+  }
+  .nav-sticky a:hover::after, .nav-sticky a.active::after { width: 100%; }
+  .nav-sticky a:hover { color: white; }
+
+  /* SECTIONS */
+  section {
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  section.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .card-glass {
+    background: rgba(12, 18, 28, 0.75);
+    backdrop-filter: blur(2px);
+    border-radius: 1.8rem;
+    border: 1px solid rgba(59,130,246,0.2);
+    padding: 1.8rem;
+    transition: all 0.2s;
+  }
+  .card-glass:hover { border-color: rgba(59,130,246,0.4); }
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2 i {
+    color: #3b82f6;
+    font-size: 1.6rem;
+  }
+
+  /* EXPERIENCIA */
+  .exp-item {
+    margin-bottom: 1.8rem;
+    border-left: 3px solid #3b82f6;
+    padding-left: 1.3rem;
+    position: relative;
+  }
+  .exp-item h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .exp-date {
+    font-size: 0.65rem;
+    background: rgba(59,130,246,0.2);
+    padding: 2px 10px;
+    border-radius: 30px;
+    font-weight: 500;
+  }
+  .exp-company {
+    color: #90a3d4;
+    font-weight: 500;
+    margin: 0.2rem 0 0.5rem;
+    font-size: 0.85rem;
+  }
+  .exp-desc {
+    color: #cbd5e6;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* SKILLS */
+  .skills-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 1rem 0;
+  }
+  .skill-tag {
+    background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.25);
+    padding: 5px 14px;
+    border-radius: 40px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #bbd7ff;
+    transition: 0.2s;
+  }
+  .skill-tag:hover { background: #3b82f6; transform: scale(1.02);}
+  .competencias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 10px;
+    margin-top: 1rem;
+  }
+  .comp-card {
+    background: rgba(0,0,0,0.35);
+    border-radius: 60px;
+    padding: 7px 14px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(59,130,246,0.2);
+  }
+
+  /* PROYECTOS CON ANIMACIÓN 3D */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  .project-card {
+    background: #0b0f18;
+    border-radius: 1.4rem;
+    overflow: hidden;
+    border: 1px solid rgba(59,130,246,0.2);
+    transition: all 0.3s ease;
+    will-change: transform;
+    transform-style: preserve-3d;
+  }
+  .project-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 15px 25px -8px rgba(59,130,246,0.25);
+  }
+  .project-icon {
+    background: linear-gradient(145deg, #10151f, #06090f);
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    color: #3b82f6;
+  }
+  .project-card div {
+    padding: 1rem;
+  }
+  .project-card h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .project-card p {
+    font-size: 0.8rem;
+    color: #a0afcf;
+    line-height: 1.4;
+  }
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 10px 0;
+  }
+  .tech-tags span {
+    background: #1e2a3e;
+    font-size: 0.6rem;
+    padding: 2px 10px;
+    border-radius: 40px;
+  }
+  .btn-sm {
+    background: #1e2a3a;
+    padding: 5px 12px;
+    border-radius: 40px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.2s;
+  }
+  .btn-sm:hover { background: #3b82f6; }
+
+  /* CERTIFICADOS */
+  .certs-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.3rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .cert-card {
+    background: #0b0f18;
+    border-radius: 1.2rem;
+    border: 1px solid rgba(59,130,246,0.3);
+    overflow: hidden;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .cert-card:hover {
+    transform: translateY(-5px);
+    border-color: #3b82f6;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  }
+  .cert-preview {
+    background: linear-gradient(145deg, #111722, #070b12);
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: #60a5fa;
+  }
+  .cert-preview i {
+    font-size: 2.8rem;
+  }
+  .cert-preview span {
+    font-size: 0.65rem;
+    background: rgba(59,130,246,0.25);
+    padding: 3px 10px;
+    border-radius: 30px;
+  }
+  .cert-info {
+    padding: 0.8rem 1rem 1rem;
+  }
+  .cert-info h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  .cert-info p {
+    font-size: 0.65rem;
+    color: #8b9ac0;
+    margin-bottom: 6px;
+  }
+  .cert-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    color: #3b82f6;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 4px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid rgba(59,130,246,0.15);
+    color: #5f6e8c;
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 780px) {
+    body { flex-direction: column; }
+    .sidebar {
+      width: 100%;
+      position: relative;
+      min-height: auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 1rem;
+      gap: 0.8rem;
+    }
+    .avatar-wrapper { width: 65px; height: 65px; margin: 0; }
+    .sidebar h2 { font-size: 1.1rem; }
+    .contact-info { display: none; }
+    .btn-group { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .btn { padding: 7px 12px; font-size: 0.7rem; }
+    .main { margin-left: 0; width: 100%; }
+    .hero h1 { font-size: 1.8rem; }
+    .hero { padding: 2rem 1rem; }
+    section { margin: 1.5rem auto; padding: 0 1rem; }
+    .card-glass { padding: 1.2rem; }
+    h2 { font-size: 1.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .certs-gallery { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.5rem; }
+    .hero p { font-size: 0.9rem; }
+    .cta-btn { padding: 8px 20px; font-size: 0.8rem; }
+    .tech-item { padding: 4px 14px; }
+    .tech-item i { font-size: 1.2rem; }
+    .card-glass { padding: 1rem; }
+    .exp-item h3 { font-size: 1rem; }
+    .comp-card { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="avatar-wrapper">
+    <img src="https://ui-avatars.com/api/?background=0f172a&color=3b82f6&bold=true&size=140&name=Sergio+A+F" alt="Sergio Aranda">
+  </div>
+  <div style="text-align: center;">
+    <h2>Sergio A. Aranda F.</h2>
+    <span class="role-badge"><i class="fas fa-code"></i> Backend Developer Junior</span>
+  </div>
+  <div class="contact-info">
+    <p><i class="fas fa-phone-alt"></i> +57 3054609798</p>
+    <p><i class="fas fa-envelope"></i> frasicaalejandro@gmail.com</p>
+    <p><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</p>
+  </div>
+  <div class="btn-group">
+    <a href="#" class="btn" id="downloadCVBtn"><i class="fas fa-file-pdf"></i> Descargar CV</a>
+    <a href="https://wa.me/573054609798" class="btn" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    <a href="https://linkedin.com/in/sergio-aranda" class="btn" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+    <a href="https://github.com/sergioaranda" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+  </div>
+</div>
+
+<div class="main">
+  <div class="hero">
+    <h1>Sergio Alejandro Aranda Frasica</h1>
+    <p>Programador de Software · Técnico en Programación SENA</p>
+    
+    <div class="cta-container">
+      <a href="https://wa.me/573054609798" class="cta-btn" target="_blank">
+        <i class="fas fa-rocket"></i> Disponible para trabajar
+      </a>
+    </div>
+
+    <div class="tech-carousel">
+      <div class="carousel-track">
+        <div class="tech-item"><i class="fab fa-python"></i><span>Python</span></div>
+        <div class="tech-item"><i class="fab fa-php"></i><span>PHP</span></div>
+        <div class="tech-item"><i class="fas fa-database"></i><span>MySQL</span></div>
+        <div class="tech-item"><i class="fas fa-database"></i><span>PostgreSQL</span></div>
+        <div class="tech-item"><i class="fab fa-linux"></i><span>Linux</span></div>
+        <div class="tech-item"><i class="fab fa-git-alt"></i><span>Git</span></div>
+        <div class="tech-item"><i class="fab fa-github"></i><span>GitHub</span></div>
+        <div class="tech-item"><i class="fab fa-wordpress"></i><span>WordPress</span></div>
+        <div class="tech-item"><i class="fas fa-code"></i><span>Django</span></div>
+        <div class="tech-item"><i class="fas fa-cloud"></i><span>DevOps</span></div>
+        <div class="tech-item"><i class="fab fa-python"></i><span>Python</span></div>
+        <div class="tech-item"><i class="fab fa-php"></i><span>PHP</span></div>
+        <div class="tech-item"><i class="fas fa-database"></i><span>MySQL</span></div>
+        <div class="tech-item"><i class="fas fa-database"></i><span>PostgreSQL</span></div>
+        <div class="tech-item"><i class="fab fa-linux"></i><span>Linux</span></div>
+        <div class="tech-item"><i class="fab fa-git-alt"></i><span>Git</span></div>
+        <div class="tech-item"><i class="fab fa-github"></i><span>GitHub</span></div>
+        <div class="tech-item"><i class="fab fa-wordpress"></i><span>WordPress</span></div>
+        <div class="tech-item"><i class="fas fa-code"></i><span>Django</span></div>
+        <div class="tech-item"><i class="fas fa-cloud"></i><span>DevOps</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-sticky">
+    <a href="#about" class="nav-link active"><i class="fas fa-user"></i> Perfil</a>
+    <a href="#experience" class="nav-link"><i class="fas fa-briefcase"></i> Experiencia</a>
+    <a href="#projects" class="nav-link"><i class="fas fa-laptop-code"></i> Proyectos</a>
+    <a href="#certs" class="nav-link"><i class="fas fa-certificate"></i> Certificados</a>
+  </div>
+
+  <section id="about">
+    <div class="card-glass">
+      <h2><i class="fas fa-user-astronaut"></i> Perfil Profesional</h2>
+      <p style="color: #cbd5f0; line-height: 1.5; font-size: 0.9rem;">Desarrollador Web Backend Junior y Técnico en Programación de Software con <strong>1 año y medio de experiencia</strong> en desarrollo, soporte y despliegue de aplicaciones web. Especializado en <strong>PHP, Python (Django), WordPress</strong> y bases de datos relacionales. He contribuido en aplicaciones internas, gestión de incidencias técnicas y optimización de procesos, aportando soluciones funcionales y escalables. Conocimientos en administración de servidores Linux, control de versiones Git y prácticas iniciales de DevOps.</p>
+      
+      <h2 style="margin-top: 1.2rem;"><i class="fas fa-bolt"></i> Enfoque Profesional</h2>
+      <p style="color: #cbd5f0; font-size: 0.9rem;">Actualmente enfocado en desarrollo backend con Python y Django, con interés en crecimiento hacia áreas de DevOps y automatización. Busco oportunidades donde pueda aportar en desarrollo de APIs, optimización de sistemas y despliegue de aplicaciones en entornos productivos.</p>
+
+      <h2 style="margin-top: 1.2rem;"><i class="fas fa-chalkboard-user"></i> Competencias Clave</h2>
+      <div class="competencias-grid">
+        <div class="comp-card">🧠 Pensamiento analítico</div>
+        <div class="comp-card">🤝 Trabajo en equipo</div>
+        <div class="comp-card">🔧 Resolución de problemas</div>
+        <div class="comp-card">🚀 Adaptabilidad tecnológica</div>
+        <div class="comp-card">📊 Metodologías ágiles</div>
+        <div class="comp-card">📈 Aprendizaje continuo</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="card-glass">
+      <h2><i class="fas fa-briefcase"></i> Trayectoria profesional</h2>
+      <div class="exp-item">
+        <h3>Consultor TI <span class="exp-date">Ene 2024 - Nov 2025</span></h3>
+        <div class="exp-company"><i class="fas fa-building"></i> IQuartil · Bogotá D.C</div>
+        <div class="exp-desc">Desempeño continuo iniciando con etapa práctica (6 meses) y posterior vinculación directa. Participé en el desarrollo y soporte de aplicaciones internas, logrando mejorar tiempos de respuesta en incidencias y optimizando procesos operativos mediante automatización. Administración básica de servidores Linux, bases de datos y despliegue de aplicaciones. Uso de Git, metodologías ágiles y prácticas DevOps en entornos reales.</div>
+      </div>
+      <div class="exp-item">
+        <h3>Agente de Soporte Técnico <span class="exp-date">Feb 2026 - Mar 2026</span></h3>
+        <div class="exp-company"><i class="fas fa-print"></i> Thomas Greg & Sons · Bogotá</div>
+        <div class="exp-desc">Soporte técnico durante proceso electoral en entornos de alta demanda. Responsable de la configuración, validación y operación de equipos tecnológicos en puntos asignados. Resolución de incidentes críticos en tiempo real, asegurando continuidad operativa durante la jornada electoral. Trabajo bajo presión siguiendo protocolos técnicos y de seguridad establecidos.</div>
+      </div>
+      <h2 style="margin-top: 1.5rem;"><i class="fas fa-graduation-cap"></i> Formación Académica</h2>
+      <div class="exp-item" style="border-left-color: #a855f7;">
+        <h3>Técnico en Programación de Software</h3>
+        <div class="exp-company">SENA - Instituto Nacional de Aprendizaje · 2023 - 2024</div>
+        <div class="exp-desc">Certificación en Redes y Seguridad, Conceptos Básicos de Hardware. Formación sólida en desarrollo de software, fundamentos de programación y bases de datos.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="card-glass">
+      <h2><i class="fas fa-cubes"></i> Proyectos destacados</h2>
+      <div class="projects-grid">
+        <div class="project-card"><div class="project-icon"><i class="fas fa-calendar-check"></i></div><div><h4>Sistema de Citas Médicas</h4><p>Aplicación web completa para gestión de citas médicas con autenticación, panel admin y notificaciones automáticas.</p><div class="tech-tags"><span>Django</span><span>PostgreSQL</span><span>Bootstrap</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Repo</a><a href="#" class="btn-sm"><i class="fas fa-eye"></i> Demo</a></div></div></div>
+        <div class="project-card"><div class="project-icon"><i class="fas fa-chart-line"></i></div><div><h4>API REST - Gestión Interna</h4><p>APIs para procesos internos con JWT, documentación Swagger e integración frontend.</p><div class="tech-tags"><span>Django REST</span><span>MySQL</span><span>JWT</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Código</a><a href="#" class="btn-sm"><i class="fas fa-server"></i> Docs</a></div></div></div>
+        <div class="project-card"><div class="project-icon"><i class="fas fa-server"></i></div><div><h4>Sistema de Tickets Soporte TI</h4><p>Plataforma para gestión de incidencias con asignación automática, estados y seguimiento en tiempo real.</p><div class="tech-tags"><span>Django</span><span>PostgreSQL</span><span>REST API</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Repo</a><a href="#" class="btn-sm"><i class="fas fa-eye"></i> Demo</a></div></div></div>
+        <div class="project-card"><div class="project-icon"><i class="fab fa-wordpress"></i></div><div><h4>Sitio Corporativo WordPress</h4><p>Maquetación con DIVI, optimización SEO e integración con plugins empresariales.</p><div class="tech-tags"><span>PHP</span><span>WordPress</span><span>DIVI</span></div><div class="buttons-group"><a href="https://www.iquartil.net/" class="btn-sm" target="_blank"><i class="fas fa-globe"></i> Ver sitio</a></div></div></div>
+        <div class="project-card"><div class="project-icon"><i class="fas fa-terminal"></i></div><div><h4>Automatización DevOps</h4><p>Scripts de despliegue en Linux, empaquetado de aplicaciones y GitHub Actions para CI/CD básico.</p><div class="tech-tags"><span>Bash</span><span>Linux</span><span>CI/CD</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Scripts</a></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="card-glass">
+      <h2><i class="fas fa-award"></i> Certificados Académicos</h2>
+      <p style="margin-bottom: 0.8rem; color:#a5b4d0; font-size:0.8rem;">📄 Haz clic en cada tarjeta para visualizar el certificado en Google Drive.</p>
+      <div class="certs-gallery" id="certsGallery">
+{}        <div class="cert-card" data-url="https://drive.google.com/file/d/1HeoZeOG-1OMFeSm85Vw_r8VRb41PxLni/view?usp=drive_link"><div class="cert-preview"><i class="fas fa-file-pdf"></i><span>Certificado SENA</span></div><div class="cert-info"><h4>Técnico en Programación de Software</h4><p>SENA · 2024</p><span class="cert-link"><i class="fas fa-external-link-alt"></i> Ver en Drive</span></div></div>
+        <div class="cert-card" data-url="https://drive.google.com/file/d/1MSpk3nq1WoYGQlGqXCE5mP6Ko4AQr2lE/view?usp=drive_link"><div class="cert-preview"><i class="fas fa-shield-alt"></i><span>Certificado Cisco</span></div><div class="cert-info"><h4>Redes y Seguridad - SENA/Cisco</h4><p>NetAcad · 2024</p><span class="cert-link"><i class="fas fa-external-link-alt"></i> Ver en Drive</span></div></div>
+        <div class="cert-card" data-url="https://drive.google.com/file/d/1QElpUa0NRhp9_20oiAfm6tAy44pUhiHM/view?usp=drive_link"><div class="cert-preview"><i class="fas fa-chart-line"></i><span>KNIME</span></div><div class="cert-info"><h4>KNIME Analytics Platform</h4><p>Análisis de datos · 2025</p><span class="cert-link"><i class="fas fa-external-link-alt"></i> Ver en Drive</span></div></div>
+        <div class="cert-card" data-url="https://drive.google.com/file/d/1UoLTxWaOjH7ASt3Rad26lbzBnG846cWx/view?usp=drive_link"><div class="cert-preview"><i class="fab fa-python"></i><span>Python</span></div><div class="cert-info"><h4>Python Essentials</h4><p>Cisco · 2025</p><span class="cert-link"><i class="fas fa-external-link-alt"></i> Ver en Drive</span></div></div>
+        <div class="cert-card" data-url="https://drive.google.com/file/d/1_iVyu18tahnXvr47pGkhXRAjFJyksSeD/view?usp=drive_link"><div class="cert-preview"><i class="fas fa-microchip"></i><span>Hardware</span></div><div class="cert-info"><h4>Hardware de Computadora</h4><p>Cisco · 2024</p><span class="cert-link"><i class="fas fa-external-link-alt"></i> Ver en Drive</span></div></div>
+      </div>
+      <p style="margin-top: 1rem; font-size: 0.7rem; text-align:center; background: #0a0e18; padding: 6px; border-radius: 60px;">✨ Todos los certificados son verificables directamente en Google Drive</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Sergio Alejandro Aranda Frasica — +57 3054609798 | frasicaalejandro@gmail.com</p>
+    <p style="margin-top: 0.3rem;">Técnico en Programación SENA | Backend Developer | DevOps en formación</p>
+  </footer>
+</div>
+
+<script>
+  const certCards = document.querySelectorAll('.cert-card');
+  certCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      const url = card.getAttribute('data-url');
+      if(url) window.open(url, '_blank');
+    });
+  });
+
+  const projectCards = document.querySelectorAll('.project-card');
+  projectCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = -(y - centerY) / 25;
+      const rotateY = (x - centerX) / 25;
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
+    });
+  });
+
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".nav-link");
+  function handleScroll() {
+    let activeFound = false;
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100 && rect.bottom > 70) {
+        sec.classList.add("show");
+        const id = sec.getAttribute("id");
+        if (rect.top <= 120 && !activeFound) {
+          navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${id}`) link.classList.add("active");
+          });
+          activeFound = true;
+        }
+      }
+    });
+    if (!activeFound && window.scrollY < 30) {
+      navLinks.forEach(l => l.classList.remove("active"));
+      if(navLinks[0]) navLinks[0].classList.add("active");
+    }
+  }
+  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("load", () => {
+    handleScroll();
+    setTimeout(() => sections.forEach(sec => { if(sec.getBoundingClientRect().top < window.innerHeight-70) sec.classList.add("show"); }), 100);
+  });
+  navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.getElementById(link.getAttribute("href").substring(1));
+      if(target) { target.scrollIntoView({ behavior: "smooth", block: "start" });
+        navLinks.forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+      }
+    });
+  });
+  
+  document.getElementById("downloadCVBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.open("cv/Sergio_Aranda_CV.pdf", "_blank");
+  });
+</script>
+</body>
+</html>
