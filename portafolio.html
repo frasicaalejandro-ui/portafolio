@@ -389,12 +389,12 @@
     border: 1px solid rgba(59,130,246,0.2);
   }
 
-  /* PROYECTOS CON ANIMACIÓN 3D */
+  /* PROYECTOS - SOLO 3 TARJETAS */
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.8rem;
+    margin-top: 1.5rem;
   }
   .project-card {
     background: #0b0f18;
@@ -571,7 +571,7 @@
 
 <div class="sidebar">
   <div class="avatar-wrapper">
-    <img src="https://ui-avatars.com/api/?background=0f172a&color=3b82f6&bold=true&size=140&name=Sergio+A+F" alt="Sergio Aranda">
+    <img src="C:\Users\USUARIO\Downloads\FOTOPERFIL.jpeg" alt="Sergio Aranda">
   </div>
   <div style="text-align: center;">
     <h2>Sergio A. Aranda F.</h2>
@@ -585,8 +585,8 @@
   <div class="btn-group">
     <a href="#" class="btn" id="downloadCVBtn"><i class="fas fa-file-pdf"></i> Descargar CV</a>
     <a href="https://wa.me/573054609798" class="btn" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-    <a href="https://linkedin.com/in/sergio-aranda" class="btn" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-    <a href="https://github.com/sergioaranda" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+    <a href="www.linkedin.com/in/sergio-aranda-frasica-50162b352" class="btn" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+    <a href="https://github.com/frasicaalejandro-ui" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a>
   </div>
 </div>
 
@@ -668,23 +668,51 @@
         <div class="exp-desc">Soporte técnico durante proceso electoral en entornos de alta demanda. Responsable de la configuración, validación y operación de equipos tecnológicos en puntos asignados. Resolución de incidentes críticos en tiempo real, asegurando continuidad operativa durante la jornada electoral. Trabajo bajo presión siguiendo protocolos técnicos y de seguridad establecidos.</div>
       </div>
       <h2 style="margin-top: 1.5rem;"><i class="fas fa-graduation-cap"></i> Formación Académica</h2>
-      <div class="exp-item" style="border-left-color: #a855f7;">
-        <h3>Técnico en Programación de Software</h3>
-        <div class="exp-company">SENA - Instituto Nacional de Aprendizaje · 2023 - 2024</div>
-        <div class="exp-desc">Certificación en Redes y Seguridad, Conceptos Básicos de Hardware. Formación sólida en desarrollo de software, fundamentos de programación y bases de datos.</div>
-      </div>
-    </div>
+
+<div class="exp-item" style="border-left-color: #a855f7;">
+  <h3>Técnico en Programación de Software</h3>
+  <div class="exp-company">SENA - Instituto Nacional de Aprendizaje · 2023 - 2024</div>
+  <div class="exp-desc">
+    Formación sólida en desarrollo de software, fundamentos de programación, bases de datos, redes y conceptos básicos de hardware.
+  </div>
+</div>
+
+<div class="exp-item" style="border-left-color: #22c55e;">
+  <h3>Tecnólogo en Infraestructura de Tecnologías de la Información (En curso)</h3>
+  <div class="exp-company">SENA - Instituto Nacional de Aprendizaje</div>
+  <div class="exp-desc">
+    Actualmente en formación, adquiriendo conocimientos en administración de sistemas, redes, seguridad informática y soporte tecnológico.
+  </div>
+</div>
+
+<div class="exp-item" style="border-left-color: #3b82f6;">
+  <h3>Formación en Inglés</h3>
+  <div class="exp-company">Smart Academy</div>
+  <div class="exp-desc">
+    Actualmente en proceso de aprendizaje del idioma inglés, fortaleciendo habilidades de comunicación para entornos profesionales y tecnológicos.
+  </div>
+</div>
   </section>
 
   <section id="projects">
     <div class="card-glass">
       <h2><i class="fas fa-cubes"></i> Proyectos destacados</h2>
       <div class="projects-grid">
-        <div class="project-card"><div class="project-icon"><i class="fas fa-calendar-check"></i></div><div><h4>Sistema de Citas Médicas</h4><p>Aplicación web completa para gestión de citas médicas con autenticación, panel admin y notificaciones automáticas.</p><div class="tech-tags"><span>Django</span><span>PostgreSQL</span><span>Bootstrap</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Repo</a><a href="#" class="btn-sm"><i class="fas fa-eye"></i> Demo</a></div></div></div>
-        <div class="project-card"><div class="project-icon"><i class="fas fa-chart-line"></i></div><div><h4>API REST - Gestión Interna</h4><p>APIs para procesos internos con JWT, documentación Swagger e integración frontend.</p><div class="tech-tags"><span>Django REST</span><span>MySQL</span><span>JWT</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Código</a><a href="#" class="btn-sm"><i class="fas fa-server"></i> Docs</a></div></div></div>
-        <div class="project-card"><div class="project-icon"><i class="fas fa-server"></i></div><div><h4>Sistema de Tickets Soporte TI</h4><p>Plataforma para gestión de incidencias con asignación automática, estados y seguimiento en tiempo real.</p><div class="tech-tags"><span>Django</span><span>PostgreSQL</span><span>REST API</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Repo</a><a href="#" class="btn-sm"><i class="fas fa-eye"></i> Demo</a></div></div></div>
-        <div class="project-card"><div class="project-icon"><i class="fab fa-wordpress"></i></div><div><h4>Sitio Corporativo WordPress</h4><p>Maquetación con DIVI, optimización SEO e integración con plugins empresariales.</p><div class="tech-tags"><span>PHP</span><span>WordPress</span><span>DIVI</span></div><div class="buttons-group"><a href="https://www.iquartil.net/" class="btn-sm" target="_blank"><i class="fas fa-globe"></i> Ver sitio</a></div></div></div>
-        <div class="project-card"><div class="project-icon"><i class="fas fa-terminal"></i></div><div><h4>Automatización DevOps</h4><p>Scripts de despliegue en Linux, empaquetado de aplicaciones y GitHub Actions para CI/CD básico.</p><div class="tech-tags"><span>Bash</span><span>Linux</span><span>CI/CD</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Scripts</a></div></div></div>
+        <!-- SISTEMA DE TICKETS SOPORTE TI -->
+        <div class="project-card">
+          <div class="project-icon"><i class="fas fa-ticket-alt"></i></div>
+          <div><h4>Sistema de Tickets Soporte TI</h4><p>Plataforma para gestión de incidencias con asignación automática, estados y seguimiento en tiempo real. Dashboard administrativo y notificaciones vía email.</p><div class="tech-tags"><span>Django</span><span>PostgreSQL</span><span>REST API</span><span>Bootstrap</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Repo</a><a href="#" class="btn-sm"><i class="fas fa-eye"></i> Demo</a></div></div>
+        </div>
+        <!-- SITIO CORPORATIVO WORDPRESS -->
+        <div class="project-card">
+          <div class="project-icon"><i class="fab fa-wordpress"></i></div>
+          <div><h4>Sitio Corporativo WordPress</h4><p>Maquetación profesional con DIVI builder, optimización SEO, integración de plugins empresariales y seguridad avanzada. Desarrollo a medida para imagen corporativa.</p><div class="tech-tags"><span>PHP</span><span>WordPress</span><span>DIVI</span><span>SEO</span></div><div class="buttons-group"><a href="https://www.iquartil.net/" class="btn-sm" target="_blank"><i class="fas fa-globe"></i> Ver sitio</a></div></div>
+        </div>
+        <!-- BASE DE CONOCIMIENTOS (NUEVO) -->
+        <div class="project-card">
+          <div class="project-icon"><i class="fas fa-database"></i></div>
+          <div><h4>Base de Conocimientos Interna</h4><p>Plataforma colaborativa para documentación técnica, procedimientos y troubleshooting interno. Incluye buscador, categorías y sistema de versiones para equipos TI.</p><div class="tech-tags"><span>Django</span><span>MySQL</span><span>Markdown</span><span>HTMX</span></div><div class="buttons-group"><a href="#" class="btn-sm"><i class="fab fa-github"></i> Repo</a><a href="#" class="btn-sm"><i class="fas fa-book-open"></i> Demo</a></div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -706,7 +734,7 @@
 
   <footer>
     <p>© 2026 Sergio Alejandro Aranda Frasica — +57 3054609798 | frasicaalejandro@gmail.com</p>
-    <p style="margin-top: 0.3rem;">Técnico en Programación SENA | Backend Developer | DevOps en formación</p>
+    <p style="margin-top: 0.3rem;">Técnico en Programación de software del SENA | Backend Developer | DevOps en formación</p>
   </footer>
 </div>
 
